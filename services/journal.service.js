@@ -4,8 +4,6 @@ const createJournal = async (title, date, text) => {
   sql = `INSERT INTO Journals (title, date, text) VALUES ("${title}", "${date}", "${text}")`;
   const res = await db.pool.execute(sql);
   const [rows] = res;
-
-  return rows;
 }
 
 const getJournals = async () => {
@@ -13,6 +11,13 @@ const getJournals = async () => {
   const res = await db.pool.execute(sql);
 
   return res;
+}
+
+const getJournal = async (journalId) => {
+  let findJournalSQL = `SELECT * FROM Journals WHERE id = ${journalId}`;
+  const [rows, fields] = await db.pool.query(findJournalSQL);
+  const [journal] = rows;
+  return journal;
 }
 
 const updateJournal = async (id, journal) => {

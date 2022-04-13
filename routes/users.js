@@ -1,6 +1,6 @@
 var express = require('express');
 const { getUsers } = require('../services/user.service');
-var router = express.Router();
+var router = express.Router({ mergeParams: true });
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

@@ -1,15 +1,14 @@
 var express = require('express');
-var router = express.Router();
+var router = express.Router({ mergeParams: true });
 
 const { createJournal, getJournals, updateJournal, deleteJournal } = require('../services/journal.service');
-const { createGratitude, getGratitudes, updateGratitude, deleteGratitude } = require('../services/gratitude.service')
 
 
 /**
  * Journal routes
  */
 router.post('/', async (req, res, next) => {
-  const newJournal = await createJournal(req.body.title, req.body.data, req.body.text);
+  const newJournal = await createJournal(req.body.title, req.body.date, req.body.text);
   res.json(newJournal).status(201).end();
 })
 
@@ -36,24 +35,4 @@ router.delete('/:id', async(req, res, next) => {
   res.json(deletedJournal).status(200).end();
 })
 
-/**
- * Gratitude Routes
- */
-let path = "/gratitude/" 
-router.post('/:id' + path, (req, res, next) => {
-  createGratitude();
-  res.json().end();
-});
-
-router.get(':journalId' + path, (req, res, next) => {
-  res.json().end();
-});
-
-router.put(':journalId' + path + ':id', (req, res, next) => {
-  res.json().end();
-});
-
-router.delete(':journalId' + path + ':id', (req, res, next) => {
-  res.json().end();
-});
 module.exports = router;
