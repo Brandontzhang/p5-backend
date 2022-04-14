@@ -13,12 +13,12 @@ router.get('/', async(req, res, next) => {
   res.json(lists).end();
 });
 
-router.put('/:journalId/lists/:id', (req, res, next) => {
+router.put('/:id', (req, res, next) => {
   updateList(req.params.journalId, req.params.id, req.body);
   res.json().end();
 });
 
-router.delete('/:journalId/lists/:id', (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
   deleteList(req.params.journalId, req.params.id);
   res.json().end();
 });
