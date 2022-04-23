@@ -20,6 +20,12 @@ const getJournal = async (journalId) => {
   return journal;
 }
 
+const getJournalByDate = async (date) => {
+  let findJournalSQL = `SELECT * FROM Journals WHERE date = "${date}"`;
+  const [journal] = await db.pool.query(findJournalSQL);
+  return journal;
+}
+
 const updateJournal = async (id, journal) => {
   const blob = Buffer.from(journal.text, 'utf-8');
   sql = `UPDATE Journals SET title = "${journal.title}", date = "${journal.date}", text = "${blob}"
@@ -39,6 +45,8 @@ const deleteJournal = async (id) => {
 module.exports = {
   createJournal,
   getJournals,
+  getJournal,
+  getJournalByDate,
   updateJournal,
   deleteJournal
 }

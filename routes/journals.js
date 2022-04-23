@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router({ mergeParams: true });
 
-const { createJournal, getJournals, updateJournal, deleteJournal } = require('../services/journal.service');
+const { createJournal, getJournals, updateJournal, deleteJournal, getJournalByDate } = require('../services/journal.service');
 
 
 /**
@@ -13,7 +13,12 @@ router.post('/', async (req, res, next) => {
 })
 
 router.get('/', async (req, res, next) => {
-  const [journals] = await getJournals();
+  let journals;
+  if (req.body.date) {
+    journals = await getJournalByDate(req.body.date);
+  } else {
+    [journals] = await getJournals();
+  }
   journals.forEach(j => {
     const buffer = Buffer.from(j.text, 'utf-8');
     j.text = buffer.toString();
