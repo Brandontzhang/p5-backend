@@ -23,6 +23,7 @@ router.get('/', async (req, res, next) => {
 
 router.put('/:id', async(req, res, next) => {
   const id = req.params.id;
+  req.body.text = Buffer.from(req.body.text, 'utf-8');
   const [updatedJournal] = await updateJournal(id, req.body);
 
   res.json(updatedJournal).status(200).end();
